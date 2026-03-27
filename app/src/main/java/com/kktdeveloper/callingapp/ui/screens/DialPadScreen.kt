@@ -92,7 +92,7 @@ fun DialPadScreen(viewModel: CallViewModel) {
                         if (dialedNumber.isNotEmpty()) {
                             val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$dialedNumber"))
                             context.startActivity(intent)
-                            viewModel.startOutgoingCall()
+                            viewModel.startOutgoingCall(context)
                         }
                     },
                     modifier = Modifier.size(72.dp),
@@ -106,16 +106,7 @@ fun DialPadScreen(viewModel: CallViewModel) {
                         modifier = Modifier.size(32.dp)
                     )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
 
-
-                TextButton(onClick = { viewModel.simulateIncomingCall() }) {
-                    Text(
-                        text = "Simulate Incoming Call",
-                        color = TextSecondary,
-                        fontSize = 12.sp
-                    )
-                }
             }
         }
     }

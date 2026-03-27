@@ -1,7 +1,8 @@
 package com.kktdeveloper.callingapp.ui.screens
 
-
-
+import android.app.Activity
+import android.view.WindowManager
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,8 +32,31 @@ fun IncomingCallScreen(
     callerNumber: String,
     viewModel: CallViewModel
 ) {
-    val displayName = if (callerName != callerNumber) callerName else null
+    val context = LocalContext.current
 
+
+    DisposableEffect(Unit) {
+        val activity = context as? Activity
+        activity?.window?.addFlags(
+            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        )
+        onDispose {
+            activity?.window?.clearFlags(
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            )
+        }
+    }
+
+
+    BackHandler(enabled = true) {
+
+    }
+
+    val displayName = if (callerName != callerNumber) callerName else null
 
     val infiniteTransition = rememberInfiniteTransition(label = "ring")
     val ring1 by infiniteTransition.animateFloat(
@@ -78,7 +103,6 @@ fun IncomingCallScreen(
 
         Spacer(modifier = Modifier.height(48.dp))
 
-
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
             Text(
@@ -90,7 +114,6 @@ fun IncomingCallScreen(
             )
 
             Spacer(modifier = Modifier.height(32.dp))
-
 
             Box(
                 modifier = Modifier.size(160.dp),
@@ -147,7 +170,6 @@ fun IncomingCallScreen(
             )
         }
 
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -171,7 +193,6 @@ fun IncomingCallScreen(
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Decline", color = TextSecondary, fontSize = 13.sp)
             }
-
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 FloatingActionButton(

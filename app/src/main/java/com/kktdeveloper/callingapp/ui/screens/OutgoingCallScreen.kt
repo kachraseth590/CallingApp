@@ -27,7 +27,7 @@ fun OutgoingCallScreen(number: String, viewModel: CallViewModel) {
     val contactName = remember(number) { getContactName(number) }
     val displayName = if (contactName != number) contactName else null
 
-    // Pulsing animation for the avatar
+
     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,

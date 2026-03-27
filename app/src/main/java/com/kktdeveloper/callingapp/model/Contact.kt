@@ -5,7 +5,7 @@ data class Contact(
     val number: String
 )
 
-// Simulated contacts for name mapping (bonus feature)
+
 val sampleContacts = listOf(
     Contact("Amit Sharma", "9876543210"),
     Contact("Priya Patel", "9123456780"),
